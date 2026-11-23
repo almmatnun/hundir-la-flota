@@ -1,8 +1,8 @@
 """Punto de entrada y bucle principal de Hundir la Flota."""
 
 # TODO: Cuando estén listos los demás módulos, importa aquí lo necesario:
-# from variables import TAMANO_TABLERO, ...
-# from clases import Tablero
+from funciones import pedir_coordenadas
+from tablero import Tablero
 # from funciones import pedir_coordenadas, disparo_aleatorio_maquina, ...
 
 def iniciar_partida():
@@ -11,10 +11,11 @@ def iniciar_partida():
 
     # 1. Preparación inicial
     nombre_jugador = input("Introduce tu nombre: ").strip() or "Jugador"
-    # TODO: Crear tablero del jugador y tablero de la máquina (Tablero)
-    # TODO: Colocar barcos en ambos tableros
-
-    # 2. Bucle principal de la partida
+    tablero_jugador= Tablero(nombre_jugador)
+    tablero_maquina= Tablero("Maquina")
+    tablero_jugador.colocar_barcos_aleatorio ()
+    tablero_maquina.colocar_barcos_aleatorio()
+    tablero_jugador.mostrar()
     while True:
         
         # IR PONIENDO AQUI EL CODIGO DE BUCLE. DEBAJO LO QUE DEBERIA HACER.
