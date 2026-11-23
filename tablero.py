@@ -1,4 +1,5 @@
 import numpy as np  
+import random
 class Tablero:
     def __init__(self, id_jugador,  tamano=10):
         self.id_jugador = id_jugador
@@ -19,7 +20,7 @@ class Tablero:
                     elementos_fila.append("🚢")
             fila_formateada = "|".join(elementos_fila)
             print(f"{i} | {fila_formateada}")
-    def colocar_barcos(self):
+    def colocar_barcos_aleatorio(self):
         #logica para posicionar los barcos en el tablero
             #1definimos la flota(tamaño de cada barco)
             # 4 barcos de 1 casilla de eslora 3 barcos de 2 casillas de eslora 2 barcos de 3 casillas de eslora 1 barco de 4 casillas de eslora
@@ -35,58 +36,39 @@ class Tablero:
             {"nombre": "Lancha 3 (eslora 1)","eslora":1 },
             {"nombre": "Lancha 4 (eslora 1)","eslora":1 },
         ]
-        total_barcos = len(flota)
         
-        for i, barcos in enumerate(flota):
+        for barcos in flota:
             eslora = barcos["eslora"]
-            nombre_barcos = barcos["nombre"]
-            barcos_restantes = total_barcos - i 
-            
             colocado = False
+            
             while not colocado:
-                print(f"======================================")
-                print(f"🚢COLOCANDO: {nombre_barcos}")
-                print(f"⏳BARCOS RESTANTES: {barcos_restantes} de {total_barcos}")
-                print(f"======================================")
-                self.mostrar() #muestra el tablero actual para que el jugador vea donde colocar los barcos
-                    
-                try:
-                    fila = int(input("🎯Introduce la fila (0-9): "))
-                    columna= int(input("📍Introduce la columna (0-9): "))
-                    orientacion = input(" ➡️⬇️Introduce orientación (H para horizontal, V para vertical): ").upper()
-                        #validar la horientacion y limites basicos
-                    if orientacion not in ["H", "V"]:
-                        print("❌😿 Error: La orientacion debe ser 'H' o 'V'.")
-                        continue
-                    if orientacion == "H" and columna + eslora > self.tamano:
-                        print("❌🚢Error: El barco se sale del tablero por la derecha.")
-                        continue
-                    elif orientacion == "V" and fila + eslora > self.tamano:
-                        print("❌⬇️Error: El barco se sale del tablero por abajo.")
-                        continue
+                orientacion = random.choice(["H", "V"])
+                fila = random.randint(0, self.tamano -1)
+                columna = random.randint(0, self.tamano -1)
+                #verificar que no se salga del tablero 
+                if orientacion == "H" and columna + eslora > self.tamano:
+                    continue
+                if orientacion== "V" and fila + eslora > self.tamano:
+                    continue
                 
-                    espacio_libre = True
+                #veridicar que todas las casillas esten libres (0)
+                espacio_libre = True
+                for j in range(eslora):
                     if orientacion == "H":
-                        for j in range(eslora):
-                            if self.matriz[fila][columna + j] !=0:
-                                espacio_libre = False
-                                break
-                    else:
-                        for j in range(eslora):
-                            if self.matriz[fila + j ][columna] !=0:
-                                espacio_libre = False
-                                break
-                    if not espacio_libre:
-                        print("❌🚢🚢Error: Ya hay un barco en esa posicion.")
-                        continue
+                        if self.matriz[fila][columna + j] != 0:
+                            espacio_libre = False
+                            break
+                if not espacio_libre:
+                    continue
+                #Colocar el barco con "B"
+                for j in range(eslora):
                     if orientacion == "H":
-                        for j in range(eslora):
-                            self.matriz[fila][columna + j] = "B"
+                        self.matriz[fila][columna + j] = "B"
                     else:
-                        for j in range(eslora):
-                            self.matriz[fila + j ][columna]= "B"
-                
-                    colocado= True #!Barco colocado con exito!, pasamos al siguente!
+                        self.matriz[fila + j][columna] = "B"
+                        
+                colocado = True
+print("La maquina ha colocado su flota")
                     print("¡Barco colocado correctamente!✅👌")
                 except ValueError:
                     print("❌😿Error: Por favor, introduce numeros validos para la fila y la columna.")
