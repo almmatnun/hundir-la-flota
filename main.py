@@ -1,13 +1,17 @@
 """Punto de entrada y bucle principal de Hundir la Flota."""
 
-# TODO: Cuando estén listos los demás módulos, importa aquí lo necesario:
-from funciones import pedir_coordenadas
 from tablero import Tablero
-# from funciones import pedir_coordenadas, disparo_aleatorio_maquina, ...
+from funciones import (
+    mostrar_instrucciones,
+    pedir_coordenadas,
+    disparo_aleatorio_maquina,
+    quedan_barcos,
+    )
 
 def iniciar_partida():
     """Prepara los tableros, coloca la flota y ejecuta el bucle de turnos."""
     print("¡Bienvenidos a Hundir la Flota!")
+    mostrar_instrucciones()
 
     # 1. Preparación inicial
     nombre_jugador = input("Introduce tu nombre: ").strip() or "Jugador"
@@ -16,21 +20,43 @@ def iniciar_partida():
     tablero_jugador.colocar_barcos_aleatorio ()
     tablero_maquina.colocar_barcos_aleatorio()
     tablero_jugador.mostrar()
+
+
+    # 2. Bucle principal de la partida
     while True:
-        
-        # IR PONIENDO AQUI EL CODIGO DE BUCLE. DEBAJO LO QUE DEBERIA HACER.
-        
-        # --- Turno del jugador ---
-        # TODO: Pedir coordenadas válidas al jugador
-        # TODO: Aplicar disparo sobre el tablero de la máquina y mostrar resultado
-        # TODO: Comprobar si quedan barcos en el tablero de la máquina;
-        #       si no quedan, mostrar victoria del jugador y hacer `break`
+        # Turno del jugador
+        print(f"\nTurno de {nombre_jugador}:")
+        fila, columna = pedir_coordenadas()
 
-        # --- Turno de la máquina ---
-        # TODO: Ejecutar disparo aleatorio sin repetir sobre el tablero del jugador
-        # TODO: Mostrar resultado y estado del tablero del jugador
-        # TODO: Comprobar si quedan barcos en el tablero del jugador;
-        #       si no quedan, mostrar victoria de la máquina y hacer `break`
+        if tablero_maquina.matriz[fila][columna] == "B":
+            tablero_maquina.matriz[fila][columna] = "X"
+            print("¡TOCADO!")
+        else:
+            if tablero_maquina.matriz[fila][columna] == 0:
+                tablero_maquina.matriz[fila][columna] = "-"
+            print("¡AGUA!")
 
+        if not quedan_barcos(tablero_maquina):
+            print(f"\n¡Enhorabuena {nombre_jugador}, has ganado!")
+            break
+
+        # Turno de la máquina 
+        print("\nTurno de la Máquina:")
+        fila_m, col_m = disparo_aleatorio_maquina(tablero_jugador)
+        print(f"La Máquina dispara a ({fila_m}, {col_m}):")
+
+        if tablero_jugador.matriz[fila_m][col_m] == "B":
+            tablero_jugador.matriz[fila_m][col_m] = "X"
+            print("¡La Máquina te ha tocado un barco!")
+        else:
+            tablero_jugador.matriz[fila_m][col_m] = "-"
+            print("¡La Máquina ha fallado (AGUA)!")
+
+        tablero_jugador.mostrar()
+
+        if not quedan_barcos(tablero_jugador):
+            print("\nLa Máquina ha hundido todos tus barcos. ¡Has perdido!")
+            break
+       
 if __name__ == "__main__":
     iniciar_partida()

@@ -69,7 +69,3 @@ class Tablero:
                         
                 colocado = True
 print("La maquina ha colocado su flota")
-                    print("¡Barco colocado correctamente!✅👌")
-                except ValueError:
-                    print("❌😿Error: Por favor, introduce numeros validos para la fila y la columna.")
-
