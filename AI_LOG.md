@@ -16,8 +16,8 @@ Niveles: **0** sin IA · **1** consulta puntual, el código es nuestro · **2** 
 |---|---|---|---|---|
 | `variables.py` | Almudena | 0 | 0 | Sí, lo hice según las indicaciones de mis compañeros|
 | `clases.py` | Ludmila | 2 | 15-20 | En parte |
-| `funciones.py` | Diego | | | |
-| `main.py` | Brian | 3 | 6 | no |
+| `funciones.py` | Diego | 2 | 12 | En parte |
+| `main.py` | Brian | 3 | 6 | No |
 | `README.md` | Almudena | 0 | 0 | Sí, pero no prometo que esté bien|
 
 ## Registro de prompts
@@ -41,6 +41,20 @@ Copiad este bloque por cada prompt que haya influido en vuestro código.
 - **Cambios:** Se ajustó el código de la rama para incluir el mensaje de bienvenida, el id_jugador y la prueba de creación/colocación/visualización del tablero, y se guardó en la rama correspondiente mediante Commit changes.
 - **Comprobación:** Se verificó la ejecución del flujo de bienvenida, captura del nombre, creación del tablero, colocación de barcos y visualización en consola, y se confirmó que el commit quedó registrado en la rama.
 - **Decisión propia:** Se decidió trabajar cada parte en su rama y coordinar la unión por Pull Requests para evitar pisar el código del resto del equipo.
+
+
+### Módulo funciones.py · Prompt 1
+
+- **Objetivo:** Implementar las funciones auxiliares del juego (`mostrar_instrucciones`, `pedir_coordenadas`, `disparo_aleatorio_maquina` y `quedan_barcos`).
+- **Prompt:** Consultas para crear de forma sencilla y clara las funciones de `funciones.py` usando `random` y `numpy`, validando coordenadas del 0 al 9 y comprobando si quedan barcos.
+- **Respuesta relevante:** Se definieron 4 funciones con bucle `while True` y `try/except` para validar entradas del usuario y generar disparos aleatorios no repetidos de la máquina.
+- **Cambios:** Se simplificaron los textos, docstrings y validaciones para que el código fuera corto, legible y fácil de explicar.
+- **Comprobación:** Se revisó la sintaxis y lógica de cada función en VS Code antes de subirla por Pull Request a `main`.
+- **Decisión propia:** Se optó por la versión más simple del código y se añadió `.history/` al `.gitignore` para no subir copias locales de VS Code.
+
+
+
+
 
 ### Módulo X · Prompt 1
 
